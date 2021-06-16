@@ -1,3 +1,20 @@
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
-baseurl: "" # the subpath of your site, e.g. /blog
-title: "" # the name of your site, e.g. ACME Corp.
+url: https://michellemccann.ca
+
+siteTitle: Michelle McCann's Portfolio of Journalism
+
+headerTitle: Michelle McCann
+
+headerSubtitle: Portfolio of Writing & Journalism
+
+navItems:
+    - title: 'Top'
+      url: '#'
+
+    - title: 'Articles'
+      url: '#articles'
+
+    - title: 'About'
+      url: '#about'
+
+    - title: 'Contact'
+      url: '#contact'

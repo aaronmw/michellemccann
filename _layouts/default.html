@@ -1,12 +1,147 @@
+{% assign config = site %}
+
 <!DOCTYPE html>
 <html lang="{{ site.lang | default: "en-US" }}">
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta charset="utf-8">
-    <title>{{ page.title }} - {{ site.title }}</title>
-    <link rel="stylesheet" href="{{ "/assets/css/main.css" | relative_url }}">
-  </head>
-  <body>
-    {{ content }}
-  </body>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        <title>
+            {{ config.siteTitle }}
+        </title>
+        <link rel="stylesheet" href="{{ "/assets/css/main.css" | relative_url }}">
+        <script src="https://kit.fontawesome.com/083acb6775.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <header class="siteHeader js-sticky-header">
+            <div class="siteHeader-titleAndNav gridContainer">
+                <h1 class="siteHeader-title">
+                    {{ config.headerTitle }}
+                    <span class="siteHeader-subtitle">
+                        {{ config.headerSubtitle }}
+                    </span>
+                </h1>
+                <nav class="siteHeader-nav">
+                    <ul class="siteHeader-navItems">
+                        {% for navItem in config.navItems %}
+                        <li class="siteHeader-navItem">
+                            <a href="{{ navItem.url }}" class="siteHeader-navItemButton">
+                                {{ navItem.title }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <main>
+            <section class="portfolio section" id="articles">
+                <div class="gridContainer">
+                    <h2 class="section-title">
+                        Articles
+                    </h2>
+                </div>
+
+                {% for article in site.data.articles %}
+                    {% assign upperForLoopIndex = forloop.index %}
+                    <div class="portfolioItem-container {% cycle "odd", "even" %}" id="article-{{ forloop.index }}">
+                        <div class="gridContainer">
+                            <div class="portfolioItem">
+                                <div class="portfolioItem-header">
+                                    <h3 class="portfolioItem-title">
+                                        {{ article.headline }}
+                                    </h3>
+
+                                    <h4 class="portfolioItem-metaInfo">
+                                        {{ article.publication }} • {{ article.publicationDate }}
+                                    </h4>
+                                </div>
+
+                                <div class="portfolioItem-description">
+                                    {{ article.blurb | markdownify }}
+                                </div>
+
+                                <figure class="portfolioItem-photoContainer">
+                                    <div class="portfolioItem-photoCropper">
+                                        <img
+                                            class="portfolioItem-photo image"
+                                            src="{{ "/assets/img/article-thumbnails/" | append: article.image | relative_url }}"
+                                        />
+                                    </div>
+                                </figure>
+
+                                <div class="portfolioItem-actions">
+                                    <a href="{{ article.url }}" class="portfolioItem-openArticleButton button" target="_blank">
+                                        <span>Go to Article</span>
+                                        <i class="far fa-external-link"></i>
+                                    </a>
+
+                                    {% if forloop.last == true %}
+                                        <a
+                                            href="#article-{{ forloop.index }}"
+                                            class="portfolioItem-nextArticleButton button button--secondary"
+                                        >
+                                            <span>About Me</span>
+                                            <i class="far fa-arrow-down"></i>
+                                        </a>
+                                    {% else %}
+                                        <a
+                                            href="#article-{{ forloop.index | plus: 1 }}"
+                                            class="portfolioItem-nextArticleButton button button--secondary"
+                                        >
+                                            <span>Next Article</span>
+                                            <i class="far fa-arrow-down"></i>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <nav class="dotNavigation">
+                            <ul class="dotNavigation-items">
+                                {% for article in site.data.articles %}
+                                    <li class="dotNavigation-item">
+                                        <a
+                                            href="#article-{{ forloop.index }}"
+                                            class="dotNavigation-button {% if forloop.index == upperForLoopIndex %}is-active{% endif %}"
+                                        >
+                                            {{ article.headline }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </nav>
+                    </div>
+                {% endfor %}
+            </section>
+
+            <section class="about section" id="about">
+                <div class="about-container">
+                    <div class="gridContainer">
+                        <div class="about-bio">
+                            <h2 class="about-title section-title">
+                                About Me
+                            </h2>
+
+                            <div class="rawHTML">
+                                {{ site.data.about.bio | markdownify }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <figure class="about-portraitContainer">
+                        <img
+                            class="about-portrait image"
+                            src="{{ "/assets/img/portrait.jpg" | relative_url }}"
+                            alt="Portrait of Michelle McCann"
+                        />
+                    </figure>
+                </div>
+            </section>
+        </main>
+
+        {{ content }}
+
+        <script src="{{ "/assets/js/main.js" | relative_url }}"></script>
+    </body>
 </html>

@@ -1,9 +1,304 @@
-$backgroundColor: #ffffff;
-$bodyColor: #000000;
-$bodyFont: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;900&display=swap');
 
-body {
-  background: $backgroundColor;
-  color: $bodyColor;
-  font-family: $bodyFont;
+@mixin fontSize($size) {
+    font-size: var(--fontSize--#{$size});
+    line-height: var(--lineHeight--#{$size});
+}
+
+* {
+    border: none;
+    box-sizing: border-box;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+
+:root {
+    --color--backgroundShaded: #fff;
+    --color--primary: #333;
+    --color--text: #333;
+
+    --dotNavigation-dotSize: 1.5rem;
+
+    --fontSize--normal: 18px;
+    --lineHeight--normal: 1.5em;
+
+    --fontSize--large: 2rem;
+    --lineHeight--large: 1.2em;
+
+    --fontSize--xLarge: 3rem;
+    --lineHeight--xLarge: 1.2em;
+
+    --whiteSpace--xTight: 0.5rem;
+    --whiteSpace--tight: 1rem;
+    --whiteSpace--normal: 1.5rem;
+    --whiteSpace--loose: 2rem;
+    --whiteSpace--xLoose: 4rem;
+
+    color: var(--color--text);
+    font-family: 'Roboto Slab', serif;
+
+    @include fontSize(normal);
+    scroll-behavior: smooth;
+    scroll-snap-type: y proximity;
+}
+
+.rawHTML {
+    p + p {
+        margin-top: var(--whiteSpace--normal);
+    }
+}
+
+.gridContainer {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--whiteSpace--normal);
+    margin: 0 auto;
+    width: 1200px;
+}
+
+.button {
+    align-items: center;
+    background-color: var(--color--primary);
+    border-radius: var(--whiteSpace--xTight);
+    color: white;
+    display: inline-flex;
+    gap: var(--whiteSpace--tight);
+    padding: var(--whiteSpace--xTight) var(--whiteSpace--normal);
+    transition: all 0.2s;
+
+    &:hover {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        transform: scale(1.1);
+    }
+}
+
+.button--secondary {
+    background-color: transparent;
+    color: var(--color--primary);
+}
+
+.dotNavigation {
+    position: absolute;
+    bottom: var(--whiteSpace--xLoose);
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.dotNavigation-items {
+    display: flex;
+    gap: var(--whiteSpace--tight);
+}
+
+.dotNavigation-button {
+    background-color: var(--color--primary);
+    border: 2px solid white;
+    border-radius: 1000px;
+    display: block;
+    height: var(--dotNavigation-dotSize);
+    overflow: hidden;
+    text-indent: var(--dotNavigation-dotSize);
+    transition: all 0.2s;
+    width: var(--dotNavigation-dotSize);
+
+    &.is-active {
+        background-color: white;
+        border-color: var(--color--primary);
+    }
+
+    &:hover {
+        transform: scale(1.5);
+    }
+}
+
+.image {
+    display: inline-block;
+    line-height: 0;
+    width: 100%;
+}
+
+.siteHeader {
+    background-color: var(--color--primary);
+    color: white;
+    left: 0;
+    padding-top: calc(var(--whiteSpace--xLoose) * 2);
+    padding-bottom: var(--whiteSpace--xLoose);
+    position: fixed;
+    right: 0;
+    top: 0;
+    transition: padding 0.5s;
+    z-index: 2;
+
+    .is-window-scrolled & {
+        padding-top: var(--whiteSpace--tight);
+        padding-bottom: var(--whiteSpace--tight);
+    }
+}
+
+.siteHeader-titleAndNav {
+    align-items: flex-end;
+}
+
+.siteHeader-title {
+    font-weight: 700;
+    @include fontSize(large);
+    grid-column-start: 1;
+    grid-column-end: 7;
+}
+
+.siteHeader-subtitle {
+    display: block;
+    @include fontSize(normal);
+    font-weight: normal;
+}
+
+.siteHeader-nav {
+    grid-column-start: 7;
+    grid-column-end: 13;
+}
+
+.siteHeader-navItems {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--whiteSpace--normal);
+}
+
+.siteHeader-navItemButton {
+    text-decoration: underline;
+    text-underline-offset: 0.25rem;
+}
+
+.section-title {
+    @include fontSize(xLarge);
+    font-style: italic;
+    text-align: center;
+    margin-top: var(--whiteSpace--xLoose);
+    margin-bottom: var(--whiteSpace--loose)
+}
+
+.portfolioItem-container {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    overflow: hidden;
+    padding-bottom: var(--whiteSpace--xLoose);
+    padding-top: calc(var(--whiteSpace--xLoose) * 2);
+    position: relative;
+
+    .is-window-scrolled & {
+        scroll-snap-align: start;
+    }
+
+    &.even {
+        background-color: var(--color--backgroundShaded);
+    }
+
+    &:before {
+        bottom: 0;
+        box-shadow: 0 10vh 20vh rgba(0, 0, 0, 0.9) inset;
+        content: '';
+        left: -50vw;
+        pointer-events: none;
+        position: absolute;
+        right: -50vw;
+        top: 0;
+        z-index: 1;
+    }
+}
+
+.portfolioItem {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: var(--whiteSpace--xLoose);
+    grid-column-start: 1;
+    grid-column-end: 6;
+}
+
+.portfolioItem-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--whiteSpace--xTight);
+}
+
+.portfolioItem-title {
+    color: var(--color--primary);
+    @include fontSize(large);
+    font-weight: 900;
+}
+
+.portfolioItem-metaInfo {
+    font-weight: 900;
+    opacity: 0.6;
+}
+
+.portfolioItem-description {
+    @include fontSize(normal);
+}
+
+.portfolioItem-photoContainer {
+    bottom: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 45vw;
+}
+
+.portfolioItem-photoCropper {
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+    width: 100vh;
+    transform: rotate(-15deg);
+    max-height: 150vh;
+    overflow: hidden;
+}
+
+.portfolioItem-actions {
+    display: flex;
+    gap: var(--fontSize--normal);
+}
+
+.about-container {
+    align-items: center;
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    position: relative;
+    scroll-snap-align: start;
+}
+
+.about-title {
+    text-align: left;
+}
+
+.about-bio {
+    grid-column-start: 1;
+    grid-column-end: 7;
+}
+
+.about-portraitContainer {
+    align-items: center;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 50vw;
+}
+
+.about-portrait {
+    border: var(--whiteSpace--normal) solid white;
+    border-bottom-width: var(--whiteSpace--xLoose);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+    transform: rotate(-15deg);
+    width: 30vw;
 }
