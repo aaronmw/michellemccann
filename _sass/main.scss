@@ -60,7 +60,7 @@
     grid-template-columns: repeat(12, 1fr);
     gap: var(--whiteSpace--normal);
     margin: 0 auto;
-    width: 1200px;
+    max-width: 1200px;
 }
 
 .button {
@@ -72,6 +72,7 @@
     gap: var(--whiteSpace--tight);
     padding: var(--whiteSpace--xTight) var(--whiteSpace--normal);
     transition: all 0.2s;
+    white-space: nowrap;
 
     &:hover {
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
@@ -121,6 +122,11 @@
     display: inline-block;
     line-height: 0;
     width: 100%;
+}
+
+.link {
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
 }
 
 .siteHeader {
@@ -175,15 +181,21 @@
 }
 
 .section-title {
+    color: white;
     @include fontSize(xLarge);
     font-style: italic;
     text-align: center;
     margin-top: var(--whiteSpace--xLoose);
-    margin-bottom: var(--whiteSpace--loose)
+    margin-bottom: var(--whiteSpace--loose);
+}
+
+.portfolio {
+    background-color: black;
 }
 
 .portfolioItem-container {
     align-items: center;
+    background-color: white;
     display: flex;
     justify-content: center;
     min-height: 100vh;
@@ -281,7 +293,7 @@
 
 .about-bio {
     grid-column-start: 1;
-    grid-column-end: 7;
+    grid-column-end: 6;
 }
 
 .about-portraitContainer {
@@ -292,7 +304,7 @@
     position: absolute;
     right: 0;
     top: 0;
-    width: 50vw;
+    width: 60vw;
 }
 
 .about-portrait {
@@ -301,4 +313,41 @@
     box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
     transform: rotate(-15deg);
     width: 30vw;
+}
+
+.contact-container {
+    align-items: center;
+    background-color: white;
+    color: black;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    padding-top: var(--whiteSpace--xLoose);
+    position: relative;
+    scroll-snap-align: start;
+}
+
+.contact-info {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    grid-column-start: 1;
+    grid-column-end: 13;
+}
+
+.contact-title {
+    display: none;
+}
+
+.contact-methods {
+    display: flex;
+    flex-direction: column;
+    @include fontSize(large);
+    gap: var(--whiteSpace--loose);
+}
+
+.contact-method {
+    align-items: flex-end;
+    display: flex;
+    gap: var(--fontSize--normal);
 }
